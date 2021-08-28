@@ -9,6 +9,12 @@ public struct EnemyAnimator
 
 	AnimationMixerPlayable mixer;
 
+	Clip previousClip;
+
+	float transitionProgress;
+
+	const float transitionSpeed = 5f;
+
 	public bool IsDone => GetPlayable(CurrentClip).IsDone();
 
 	public Clip CurrentClip { get; private set; }
@@ -17,7 +23,7 @@ public struct EnemyAnimator
 	{
 		graph = PlayableGraph.Create();
 		graph.SetTimeUpdateMode(DirectorUpdateMode.GameTime);
-		mixer = AnimationMixerPlayable.Create(graph, 3);
+		mixer = AnimationMixerPlayable.Create(graph, 4);
 
 		var clip = AnimationClipPlayable.Create(graph, config.Move);
 		clip.Pause();
@@ -32,6 +38,11 @@ public struct EnemyAnimator
 		clip.Pause();
 		mixer.ConnectInput((int)Clip.Outro, clip, 0);
 
+		clip = AnimationClipPlayable.Create(graph, config.Dying);
+		clip.SetDuration(config.Dying.length);
+		clip.Pause();
+		mixer.ConnectInput((int)Clip.Dying, clip, 0);
+
 		var output = AnimationPlayableOutput.Create(graph, "Enemy", animator);
 		output.SetSourcePlayable(mixer);
 	}
@@ -41,6 +52,7 @@ public struct EnemyAnimator
 		SetWeight(Clip.Intro, 1f);
 		CurrentClip = Clip.Intro;
 		graph.Play();
+		transitionProgress = -1f;
 	}
 
 	private void SetWeight(Clip clip, float weight)
@@ -50,13 +62,8 @@ public struct EnemyAnimator
 
 	public void PlayMove(float speed)
 	{
-		SetWeight(CurrentClip, 0f);
-		SetWeight(Clip.Move, 1f);
-		var clip = GetPlayable(Clip.Move);
-		clip.SetSpeed(speed);
-		clip.Play();
-
-		CurrentClip = Clip.Move;
+		GetPlayable(Clip.Move).SetSpeed(speed);
+		BeginTransition(Clip.Move);
 	}
 
 	Playable GetPlayable(Clip clip)
@@ -66,10 +73,7 @@ public struct EnemyAnimator
 
 	public void PlayOutro()
 	{
-		SetWeight(CurrentClip, 0f);
-		SetWeight(Clip.Outro, 1f);
-		GetPlayable(Clip.Outro).Play();
-		CurrentClip = Clip.Outro;
+		BeginTransition(Clip.Outro);
 	}
 
 	public void Stop()
@@ -86,6 +90,39 @@ public struct EnemyAnimator
 	{ 
 		Move,
 		Intro,
-		Outro 
+		Outro,
+		Dying
+	}
+
+	void BeginTransition(Clip nextClip)
+	{
+		previousClip = CurrentClip;
+		CurrentClip = nextClip;
+		transitionProgress = 0f;
+		GetPlayable(nextClip).Play();
+	}
+
+	public void GameUpdate()
+	{
+		if (transitionProgress >= 0f)
+		{
+			transitionProgress += Time.deltaTime * transitionSpeed;
+			if (transitionProgress >= 1f)
+			{
+				transitionProgress = -1f;
+				SetWeight(CurrentClip, 1f);
+				SetWeight(previousClip, 0f);
+			}
+			else
+			{
+				SetWeight(CurrentClip, transitionProgress);
+				SetWeight(previousClip, 1f - transitionProgress);
+			}
+		}
+	}
+
+	public void PlayDying()
+	{
+		BeginTransition(Clip.Dying);
 	}
 }

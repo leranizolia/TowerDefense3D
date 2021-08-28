@@ -65,6 +65,8 @@ public class Enemy : GameBehavior
 
     public override bool GameUpdate()
     {
+        animator.GameUpdate();
+
         if (animator.CurrentClip == EnemyAnimator.Clip.Intro)
         {
             if (!animator.IsDone)
@@ -73,7 +75,7 @@ public class Enemy : GameBehavior
             }
             animator.PlayMove(speed / Scale);
         }
-        else if (animator.CurrentClip == EnemyAnimator.Clip.Outro)
+        else if (animator.CurrentClip >= EnemyAnimator.Clip.Outro)
         {
             if (animator.IsDone)
             {
@@ -85,9 +87,10 @@ public class Enemy : GameBehavior
 
         if (Health <= 0f)
         {
-            Recycle();
-            return false;
+            animator.PlayDying();
+            return true;
         }
+
         progress += Time.deltaTime * progressFactor;
         while (progress >= 1f)
         {

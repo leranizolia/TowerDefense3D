@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enemy Factory
   m_EditorClassIdentifier: 
   small:
-    prefab: {fileID: 1235533974500919651, guid: ea09632872e6bae4ca41ec76d8947c46, type: 3}
+    prefab: {fileID: 7520411464091375100, guid: 7106878b3211e0142a06dcd53c8208b7, type: 3}
     scale:
       min: 0.5
       max: 0.6
@@ -27,7 +27,7 @@ MonoBehaviour:
       min: 40
       max: 50
   medium:
-    prefab: {fileID: 3161376528480317868, guid: 478e14ee8a95e9a4eb54872c40d0120d, type: 3}
+    prefab: {fileID: 7520411464091375100, guid: 7106878b3211e0142a06dcd53c8208b7, type: 3}
     scale:
       min: 0.9
       max: 1
@@ -41,7 +41,7 @@ MonoBehaviour:
       min: 90
       max: 120
   large:
-    prefab: {fileID: 6808035143995503124, guid: ed7533235cc099848a8a5eedf7ce6f78, type: 3}
+    prefab: {fileID: 7520411464091375100, guid: 7106878b3211e0142a06dcd53c8208b7, type: 3}
     scale:
       min: 1.2
       max: 1.4

@@ -41,6 +41,18 @@ public class Enemy : GameBehavior
 
     float Health { get; set; }
 
+    Collider targetPointCollider;
+
+    public Collider TargetPointCollider
+    {
+        set
+        {
+            targetPointCollider = value;
+        }
+    }
+
+    public bool IsValidTarget => animator.CurrentClip == EnemyAnimator.Clip.Move;
+
 
     public void SpawnOn(GameTile tile)
     {
@@ -73,7 +85,8 @@ public class Enemy : GameBehavior
             {
                 return true;
             }
-            animator.PlayMove(speed / Scale);
+            animator.PlayMove(animationConfig.MoveAnimationSpeed * speed / Scale);
+            targetPointCollider.enabled = true;
         }
         else if (animator.CurrentClip >= EnemyAnimator.Clip.Outro)
         {
@@ -88,6 +101,7 @@ public class Enemy : GameBehavior
         if (Health <= 0f)
         {
             animator.PlayDying();
+            targetPointCollider.enabled = false;
             return true;
         }
 
@@ -98,6 +112,7 @@ public class Enemy : GameBehavior
             {
                 Game.EnemyReachedDestination();
                 animator.PlayOutro();
+                targetPointCollider.enabled = false;
                 return true;
             }
             progress = (progress - 1f) / progressFactor;
@@ -184,12 +199,13 @@ public class Enemy : GameBehavior
 
     public void Initialize(float scale, float speed, float pathOffset, float health)
     {
-        animator.PlayIntro();
         Health = health;
         Scale = scale;
         model.localScale = new Vector3(scale, scale, scale);
         this.speed = speed;
         this.pathOffSet = pathOffset;
+        animator.PlayIntro();
+        targetPointCollider.enabled = false;
     }
 
     public void ApplyDamage(float damage)

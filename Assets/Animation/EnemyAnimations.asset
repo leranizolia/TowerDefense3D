@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7e3faf808a471547a37a189b50eefc4, type: 3}
   m_Name: EnemyAnimations
   m_EditorClassIdentifier: 
-  move: {fileID: 7400000, guid: 218872ca316fe1140b99f50d8b55595c, type: 2}
-  intro: {fileID: 7400000, guid: 3541747f565618d4d82a3a37a6fc9eed, type: 2}
-  outro: {fileID: 7400000, guid: 4c204c7fa2906404bbedb518341c10a4, type: 2}
-  dying: {fileID: 7400000, guid: 5429cf256b544a946a38472a23399215, type: 2}
+  move: {fileID: 7400000, guid: fcda2324239da044cbb92e43b9e1b3fc, type: 2}
+  intro: {fileID: 7400000, guid: fef16a1b7bee91f4fb03b077a272d631, type: 2}
+  outro: {fileID: 7400000, guid: fef16a1b7bee91f4fb03b077a272d631, type: 2}
+  dying: {fileID: 7400000, guid: b65de24ac785be34cba65d8c7d8d3856, type: 3}
+  appear: {fileID: 7400000, guid: 59d2f862750d96f419ff8a6fff193113, type: 2}
+  disappear: {fileID: 7400000, guid: b81f2fe174c0cef478f29bea183dca58, type: 2}
+  moveAnimationSpeed: 2

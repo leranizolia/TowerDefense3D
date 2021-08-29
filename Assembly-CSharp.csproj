@@ -82,6 +82,15 @@
     <Compile Include="Assets\Scripts\EnemyAnimator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\3D Game Kit - Character Pack\Shaders\Alien.shader" />
+    <None Include="Assets\3D Game Kit - Character Pack\Shaders\EyeLash.shader" />
+    <None Include="Assets\3D Game Kit - Character Pack\Shaders\EyeBallsHD.shader" />
+    <None Include="Assets\3D Game Kit - Character Pack\Shaders\EnergyCore.shader" />
+    <None Include="Assets\3D Game Kit - Character Pack\Shaders\SculptedHair.shader" />
+    <None Include="Assets\3D Game Kit - Character Pack\Shaders\ToonSkin.shader" />
+    <None Include="Assets\3D Game Kit - Character Pack\Shaders\Dissolve.shader" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="UnityEngine">
       <HintPath>C:\Users\nizol\Desktop\2020.3.13f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

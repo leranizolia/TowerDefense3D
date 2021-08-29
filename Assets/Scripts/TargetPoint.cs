@@ -11,7 +11,8 @@ public class TargetPoint : MonoBehaviour
     private void Awake()
     {
         Enemy = transform.root.GetComponent<Enemy>();
-    }
+		Enemy.TargetPointCollider = GetComponent<Collider>();
+	}
 
 	const int enemyLayerMask = 1 << 9;
 

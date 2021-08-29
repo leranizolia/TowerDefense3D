@@ -27,7 +27,7 @@ public abstract class Tower : GameTileContent
 	}
 	protected bool TrackTarget(ref TargetPoint target)
 	{
-		if (target == null)
+		if (target == null || !target.Enemy.IsValidTarget)
 		{
 			return false;
 		}
